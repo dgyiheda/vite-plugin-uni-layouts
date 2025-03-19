@@ -1,11 +1,11 @@
-# @uni-helper/vite-plugin-uni-layouts
+# @yhdfe-plugins/vite-plugin-uni-layouts
 
-Vite 下 uni-app 的可定制布局框架
+Vite 下 uni-app 的可定制布局框架, 基于[@uni-helper/vite-plugin-uni-layouts](https://github.com/uni-helper/vite-plugin-uni-layouts)改造,主要为了兼容uni-simple-router
 
 ## 安装
 
 ```bash
-pnpm i -D @uni-helper/vite-plugin-uni-layouts
+pnpm i -D @yhdfe-plugins/vite-plugin-uni-layouts
 ```
 
 ## 使用
@@ -16,7 +16,7 @@ pnpm i -D @uni-helper/vite-plugin-uni-layouts
 // vite.config.ts
 import { defineConfig } from 'vite'
 import uni from '@dcloudio/vite-plugin-uni'
-import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
+import UniLayouts from '@yhdfe-plugins/vite-plugin-uni-layouts'
 
 export default defineConfig({
   plugins: [UniLayouts(), uni()],
@@ -91,6 +91,7 @@ const defaultName = ref('default')
 const uniLayout = ref()
 </script>
 ```
+
 或者
 
 ```vue

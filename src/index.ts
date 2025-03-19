@@ -32,10 +32,11 @@ export function VitePluginUniLayouts(userOptions: UserOptions = {}): Plugin {
     },
     transform(code, id) {
       const filter = createFilter(['src/main.(ts|js)', 'main.(ts|js)'])
-      if (filter(id))
+      if (filter(id)) {
         return ctx.importLayoutComponents(code, id)
-
-      return ctx.transform(code, id)
+      } else {
+        return ctx.transform(code, id)
+      }
     },
   }
 }

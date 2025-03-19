@@ -15,11 +15,11 @@ function handleSwitch() {
 
 <template>
   <button @click="handleSwitch"> switch </button>
-  <uni-layout :name="layoutName">
+  <!-- <uni-layout :name="layoutName">
     <template #header>uni-layout header</template>
     currentLayoutName: {{ layoutName }}
     <template #footer>uni-layout footer</template>
-  </uni-layout>
+  </uni-layout> -->
 </template>
 
 <route lang="json">

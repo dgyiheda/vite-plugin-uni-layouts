@@ -9,6 +9,8 @@ import { normalizePath } from 'vite'
 import { scanLayouts } from './scan'
 import type { Layout, Page, ResolvedOptions } from './types'
 import { getTarget, loadPagesJson, parseSFC } from './utils'
+import { readdir, readdirSync, readFileSync, statSync } from 'fs'
+import { join, resolve } from 'path'
 
 export class Context {
   config!: ResolvedConfig
@@ -34,20 +36,43 @@ export class Context {
 
   async setupWatcher(watcher: FSWatcher) {
     watcher.on('change', async (path) => {
-      if (path.includes('pages.json'))
+      if (path.includes('pages.json')) {        
         this.pages = loadPagesJson(this.pageJsonPath, this.options.cwd)
-
+      }
+      
       // TODO: auto reload
     })
   }
 
   async transform(code: string, path: string) {
+    // console.log("🚀 ~ transform ~ path:", path)
+    
     // no layouts
     if (!this.layouts.length)
       return
     // no pages
-    if (!this.pages?.length)
+
+    // 兼容 uni-simple-router
+    if (/\/pages\-json\-js$/.test(path)) {
+      this.pages = []
+      // console.log("🚀 ~ transform ~ code:", code)
+      const { pages = [], subPackages = [] } = JSON.parse(code)
+      this.pages = [
+        ...pages,
+        ...subPackages
+          .map(({ pages = {}, root = '' }: any) => {
+            return pages.map((page: any) => ({
+              ...page,
+              path: normalizePath(join(root, page.path)),
+            }))
+          })
+          .flat(),
+      ]
+    }
+        
+    if (!this.pages?.length) {
       this.pages = loadPagesJson(this.pageJsonPath, this.options.cwd)
+    }
 
     const page = getTarget(
       path,

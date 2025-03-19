@@ -7,16 +7,7 @@
   },
   "pages": [
     {
-      "path": "pages/index/index",
-      "type": "home"
-    },
-    {
-      "path": "pages/index/disabled",
-      "type": "page"
-    },
-    {
-      "path": "pages/index/uni-layout",
-      "type": "page"
+      "path": "router/inspect/loading"
     }
   ],
   "subPackages": [
@@ -25,4 +16,4 @@
       "pages": []
     }
   ]
-}
+} 
