@@ -10,10 +10,17 @@
       "path": "router/inspect/loading"
     }
   ],
+  // #ifdef MP-WEIXIN
+  "mp-weixin": {
+    "usingComponents": {
+      "uni-layouts": "@yhdfe-plugins/vite-plugin-uni-layouts/client"
+    }
+  },
+  // #endif
   "subPackages": [
     {
       "root": "pages-sub",
       "pages": []
     }
   ]
-} 
+}

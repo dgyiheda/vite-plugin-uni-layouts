@@ -1,3 +1,4 @@
+import { join } from 'node:path'
 import type { Node } from '@babel/types'
 import { isMp } from '@uni-helper/uni-env'
 import type { AttributeNode, DirectiveNode, ElementNode, SimpleExpressionNode } from '@vue/compiler-core'
@@ -9,8 +10,6 @@ import { normalizePath } from 'vite'
 import { scanLayouts } from './scan'
 import type { Layout, Page, ResolvedOptions } from './types'
 import { getTarget, loadPagesJson, parseSFC } from './utils'
-import { readdir, readdirSync, readFileSync, statSync } from 'fs'
-import { join, resolve } from 'path'
 
 export class Context {
   config!: ResolvedConfig
@@ -36,17 +35,16 @@ export class Context {
 
   async setupWatcher(watcher: FSWatcher) {
     watcher.on('change', async (path) => {
-      if (path.includes('pages.json')) {        
+      if (path.includes('pages.json'))
         this.pages = loadPagesJson(this.pageJsonPath, this.options.cwd)
-      }
-      
+
       // TODO: auto reload
     })
   }
 
   async transform(code: string, path: string) {
     // console.log("🚀 ~ transform ~ path:", path)
-    
+
     // no layouts
     if (!this.layouts.length)
       return
@@ -69,10 +67,9 @@ export class Context {
           .flat(),
       ]
     }
-        
-    if (!this.pages?.length) {
+
+    if (!this.pages?.length)
       this.pages = loadPagesJson(this.pageJsonPath, this.options.cwd)
-    }
 
     const page = getTarget(
       path,

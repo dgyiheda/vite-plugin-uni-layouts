@@ -29,7 +29,11 @@ export function loadPagesJson(path = 'src/pages.json', cwd = process.cwd()) {
     encoding: 'utf-8',
   })
 
-  const { pages = [], subPackages = [] } = jsonParse(pagesJsonRaw)
+  const { pages = [], subPackages = [] } = jsonParse(pagesJsonRaw, [], {
+    disallowComments: false,
+    allowTrailingComma: true,
+    allowEmptyContent: true,
+  })
 
   return [
     ...pages,
